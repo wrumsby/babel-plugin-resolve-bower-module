@@ -1,0 +1,7 @@
+test
+.babelrc
+.editorconfig
+.eslintignore
+.eslintrc
+.nvmrc
+.travis.yml
