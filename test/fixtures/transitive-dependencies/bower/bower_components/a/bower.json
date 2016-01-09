@@ -1,0 +1,9 @@
+{
+  "name": "a",
+  "main": [
+    "src/index.js"
+  ],
+  "dependencies": {
+    "b": "1.0.0"
+  }
+}

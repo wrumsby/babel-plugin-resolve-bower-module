@@ -26,8 +26,27 @@ export default function (cwd=process.cwd()) {
       });
     });
   }).then(json => {
-    // TODO: also need dependencies of dependencies
     const dependencies = extend(json.dependencies || {}, json.devDependencies);
+
+    return Promise.all(
+      Object.keys(dependencies).map(d => new Promise((resolve, reject) => {
+        const file = path.join(directory, d);
+
+        readJson(file, function (err, depJson) {
+          if (err) {
+            reject(err);
+          }
+
+          resolve(extend(dependencies, depJson.dependencies || {}, depJson.devDependencies));
+        });
+      }))
+    );
+  }).then(values => {
+    const dependencies = {};
+
+    values.forEach(v => {
+      Object.keys(v).forEach(k => dependencies[k] = v[k]);
+    });
 
     return Promise.all(
       Object.keys(dependencies).map(d => new Promise((resolve, reject) => {

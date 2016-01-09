@@ -1,5 +1,6 @@
 import path from 'path';
-import once from 'once';
+// FIXME: Once breaks tests - figure out how to mock it.
+//import once from 'once';
 import slash from 'slash';
 import deasync from 'deasync';
 import bower from './dependencies';
@@ -9,7 +10,7 @@ import bower from './dependencies';
  * Sets up the module file resolution mappings for code transforms
  * @return {undefined}
  */
-const setup = once(deasync(function (opts={}, plugin, callback) {
+const setup = /*once(*/deasync(function (opts={}, plugin, callback) {
   return new Promise((resolve, reject) => {
     const config = extractConfig(opts, plugin);
     const cwd = config.cwd || '.' || process.cwd();
@@ -20,7 +21,7 @@ const setup = once(deasync(function (opts={}, plugin, callback) {
   }).catch(reason => {
     callback(reason);
   });
-}));
+})/*)*/;
 
 /**
  * @private

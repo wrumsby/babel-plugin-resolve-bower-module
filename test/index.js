@@ -61,6 +61,10 @@ describe('babel-plugin-resolve-bower-module', () => {
 		{
 			dir: 'bower-dependencies',
 			description: 'Resolves Bower dependencies'
+		},
+		{
+			dir: 'transitive-dependencies',
+			description: 'Resolves transitive Bower dependencies'
 		}
 	].forEach(run);
 });

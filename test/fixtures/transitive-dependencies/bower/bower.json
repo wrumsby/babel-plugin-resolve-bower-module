@@ -1,0 +1,6 @@
+{
+  "name": "fixture-transitive-dependencies",
+  "dependencies": {
+    "a": "1.0.0"
+  }
+}
