@@ -1,5 +1,7 @@
 # babel-plugin-resolve-bower-module
 
+[![Build Status](https://travis-ci.org/wrumsby/babel-plugin-resolve-bower-module.svg?branch=master)](https://travis-ci.org/wrumsby/babel-plugin-resolve-bower-module)
+
 A Babel plugin to resolve imports that reference Bower modules.
 
 ## Installation
