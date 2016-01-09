@@ -17,3 +17,17 @@ In your `.babelrc` file add the plugin to the `plugins` array:
   ]
 }
 ```
+
+## How it works
+
+This plugin will look for `import` statements where the `module-name` matches a Bower module that is declared as a `dependency` or a `devDependency` of the project, e.g.
+
+```js
+import foo from 'foo';
+```
+
+will be transformed to something like
+
+```js
+import foo from '../../bower_components/foo/src/index';
+```
