@@ -1,39 +1,26 @@
 import path from 'path';
+import once from 'once';
 import slash from 'slash';
 import deasync from 'deasync';
-import bowerResolution from './dependencies';
-
-let map = {};
-let setupComplete = false;
+import bower from './dependencies';
 
 /**
  * @private
  * Sets up the module file resolution mappings for code transforms
  * @return {undefined}
  */
-function setup (config={}) {
-  if (setupComplete) {
-    return;
-  }
+const setup = once(deasync(function (opts={}, plugin, callback) {
+  return new Promise((resolve, reject) => {
+    const config = extractConfig(opts, plugin);
+    const cwd = config.cwd || '.' || process.cwd();
 
-  let done = false;
-
-  const cwd = config.cwd || process.cwd();
-
-  bowerResolution(cwd).then(function (dependencies) {
-    map = dependencies;
-    done = true;
-  }).catch(function (e) {
-    console.error(e);
-    done = true;
+    resolve(bower(cwd));
+  }).then(map => {
+    callback(null, map);
+  }).catch(reason => {
+    callback(reason);
   });
-
-  deasync.loopWhile(function () {
-    return !done;
-  });
-
-  setupComplete = done;
-}
+}));
 
 /**
  * @private
@@ -60,9 +47,10 @@ function extractConfig(opts, plugin) {
  * @private
  * Resolves a string value to any existing bower module path
  * @param {String} source module source
+ * @param {Object} map map of sources
  * @return {String} resolved module source
  */
-function resolve(source) {
+function resolve(source, map) {
   const mapped = map[source];
 
   if (mapped) {
@@ -73,38 +61,13 @@ function resolve(source) {
 }
 
 export default function ({ types: t }) {
-  let config = {};
-
   return {
-    visitor: {
-      CallExpression({ node }) {
-        if(!setupComplete) {
-          setup();
-        }
-
-        const name = node.callee.name;
-
-        if (name === 'require') {
-          const args = node.arguments;
-          const firstArg = args[0];
-
-          if (args.length === 1 && t.isStringLiteral(firstArg)) {
-            const resolvedValue = resolve(firstArg.value, config);
-            args[0] = t.stringLiteral(resolvedValue);
-          }
-        }
-      }
-    },
-
     manipulateOptions(opts) {
-      if(!setupComplete) {
-        config = extractConfig(opts, this);
-        setup(config);
-      }
+      const map = setup(opts, this);
 
       opts.resolveModuleSource = function (source, filename) {
-        return resolve(source);
-      }
+        return resolve(source, map);
+      };
     }
   };
 }
