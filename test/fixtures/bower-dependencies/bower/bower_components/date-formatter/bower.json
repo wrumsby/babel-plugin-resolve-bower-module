@@ -1,0 +1,6 @@
+{
+  "name": "date-formatter",
+  "main": [
+    "src/index.js"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "fixture-bower-dependencies",
+  "dependencies": {
+    "date-formatter": "1.0.0"
+  }
+}

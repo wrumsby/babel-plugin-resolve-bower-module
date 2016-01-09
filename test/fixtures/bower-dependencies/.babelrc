@@ -1,0 +1,7 @@
+{
+  "plugins": [
+    ["resolve-bower-module", {
+      "cwd": "./test/fixtures/bower-dependencies/bower"
+    }]
+  ]
+}
