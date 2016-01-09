@@ -2,6 +2,7 @@
   "name": "babel-plugin-resolve-bower-module",
   "version": "1.0.0",
   "description": "A Babel plugin to resolve imports that reference Bower modules",
+  "repository": "github:wrumsby/babel-plugin-resolve-bower-module",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
   "engines": {
