@@ -26,6 +26,7 @@ export default function (cwd=process.cwd()) {
       });
     });
   }).then(json => {
+    // TODO: also need dependencies of dependencies
     const dependencies = extend(json.dependencies || {}, json.devDependencies);
 
     return Promise.all(
