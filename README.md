@@ -33,3 +33,16 @@ will be transformed to something like
 ```js
 import foo from '../../bower_components/foo/src/index';
 ```
+
+
+## Options
+
+If the plugin isn't resolving paths correctly or if your `bower.json` isn't in `process.cwd()` you can pass `cwd` as an option to the plugin, e.g. in `.babelrc` specify
+
+```json
+{
+  "plugins": [
+    ["resolve-bower-module", { "cwd": ".." }]
+  ]
+}
+```
